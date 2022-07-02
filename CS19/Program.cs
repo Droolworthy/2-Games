@@ -61,7 +61,7 @@ namespace CS19
                         bossMundus -= stinger;
                         Nero -= bossDamage;
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine("У вас осталось " + Nero + " хп.");
+                        Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
@@ -69,7 +69,7 @@ namespace CS19
                         bossMundus -= highside;
                         Nero -= bossDamage;
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine("У вас осталось " + Nero + " хп.");
+                        Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
@@ -77,7 +77,7 @@ namespace CS19
                         bossMundus -= millionStab;
                         Nero -= bossDamage;
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine("У вас осталось " + Nero + " хп.");
+                        Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
@@ -85,7 +85,7 @@ namespace CS19
                         bossMundus -= triggerHeart;
                         Nero -= bossDamage;
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine("У вас осталось " + Nero + " хп.");
+                        Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
@@ -94,10 +94,10 @@ namespace CS19
                         if (probabilityActivationDevilTrigger > random.Next(1,100))
                         {
                             bossMundus -= DevilTrigger;
-                            Console.WriteLine("Вы активируйте дьявольсий триггер и превращайтесь в Демона! " +
-                                "Вы наносите 250 едениц урона.");
+                            Console.WriteLine($"Вы активируйте дьявольсий триггер и превращайтесь в Демона! " +
+                                $"Вы наносите {DevilTrigger} едениц урона!");
                             Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                            Console.WriteLine("У вас осталось " + Nero + " хп.");
+                            Console.WriteLine($"У вас осталось {Nero} хп.");
                             Console.Write("Следующая атака под номером - ");
                         }
                         else
@@ -106,7 +106,7 @@ namespace CS19
                             Console.WriteLine("Попытка провалилась! При активации превращения, " +
                                 "у вас открылась старая рана и пошла кровь, которая нанесла вам 50 едениц урона!");
                             Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                            Console.WriteLine("У вас осталось " + Nero + " хп.");
+                            Console.WriteLine($"У вас осталось {Nero} хп.");
                             Console.Write("Следующая атака под номером - ");
                         }
                         userInput = Console.ReadLine();
