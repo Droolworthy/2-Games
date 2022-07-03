@@ -8,10 +8,8 @@ namespace CS19
         {
             Random random = new Random(); //ранодом
             int Nero = 100; // охотник на демонов Неро
-            int stinger = 20;// жало
+            int stinger = 100;// жало
             int highside = 50; // подбросить врага вверх
-            int millionStab = 100;  // миллион ударов 
-            int triggerHeart = 150; // разряд поражающий серде
             int bossMundus = 500; // босс
             int bossDamage = 20; // урон от босса
             int death = 0; //смерть
@@ -25,6 +23,7 @@ namespace CS19
             int emptyMedicalBag = 0; //пустой мед пакет
             int maxhealthbossMundus = 550; // макс запаз жизей босса
             int maxHealthNero = 125; // максимальный запас Неро
+            bool stingerEffect = false;
 
             Console.WriteLine("Вы охотник на демонов Неро, перед вами главный демон игры Мундус. Начнём!");
             Console.WriteLine();
@@ -33,17 +32,16 @@ namespace CS19
             Console.WriteLine();
             Console.WriteLine("1 - Жало.");
             Console.WriteLine("2 - Подбросить врага вверх.");
-            Console.WriteLine("3 - Миллион ударов.");
-            Console.WriteLine("4 - Разряд поражающий сердце.");
-            Console.WriteLine("5 - Дьявольский триггер. Атака на 250 едениц. Риск кровотечения составляет 50 процентов.");
-            Console.WriteLine("6 - Медицинский пакет. Восстанавливает здоровье на 25 едениц. При использовании Демон восстанавливает 50 едениц.");
-            Console.WriteLine("7 - Выход из игры");
+            Console.WriteLine("3 - Дьявольский триггер. Атака на 250 едениц. Риск кровотечения составляет 50 процентов.");
+            Console.WriteLine("4 - Медицинский пакет. Восстанавливает здоровье на 25 едениц. При использовании Демон восстанавливает 50 едениц.");
+            Console.WriteLine("5 - Выход из игры");
             Console.WriteLine();
             Console.Write("Введите команду: ");
             userInput = Console.ReadLine();
 
             while (exitApp)
             {
+
                 if (Nero <= death)
                 {
                     Console.WriteLine(" Победа Демона! Попробуй ещё раз!");
@@ -54,44 +52,40 @@ namespace CS19
                     Console.WriteLine(" Победа Неро! Демон разлетается на тысячи кусков, отправляйся в АД!");
                     break;
                 }
-                
+
                 switch (userInput)
                 {
                     case "1":
-                        bossMundus -= stinger;
-                        Nero -= bossDamage;
-                        Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine($"У вас осталось {Nero} хп.");
-                        Console.Write("Следующая атака под номером - ");
-                        userInput = Console.ReadLine();
+                        if (stingerEffect == true)
+                        {
+                            bossMundus -= stinger;
+                            stingerEffect = false;
+                            Console.WriteLine($"Ваш клинок превращается в острое жало и взымается вверх нанося Мундусу {stinger} урона");
+                            Nero -= bossDamage;
+                            Console.WriteLine($"У босса осталось {bossMundus} хп.");
+                            Console.WriteLine($"У вас осталось {Nero} хп.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Чтобы активировать жало, вам нужно подбросить врага вверх!");
+                            Console.Write("Следующая атака под номером - ");
+                            userInput = Console.ReadLine();
+                        }
                         break;
                     case "2":
+                        if (stingerEffect == true)
                         bossMundus -= highside;
                         Nero -= bossDamage;
+                        stingerEffect = true;
+                        Console.WriteLine($"Вы подкинули демона вверх нанеся ему {highside} урона.");
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
                         Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
                     case "3":
-                        bossMundus -= millionStab;
-                        Nero -= bossDamage;
-                        Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine($"У вас осталось {Nero} хп.");
-                        Console.Write("Следующая атака под номером - ");
-                        userInput = Console.ReadLine();
-                        break;
-                    case "4":
-                        bossMundus -= triggerHeart;
-                        Nero -= bossDamage;
-                        Console.WriteLine($"У босса осталось {bossMundus} хп.");
-                        Console.WriteLine($"У вас осталось {Nero} хп.");
-                        Console.Write("Следующая атака под номером - ");
-                        userInput = Console.ReadLine();
-                        break;
-                    case "5":
 
-                        if (probabilityActivationDevilTrigger > random.Next(1,100))
+                        if (probabilityActivationDevilTrigger > random.Next(1, 100))
                         {
                             bossMundus -= DevilTrigger;
                             Console.WriteLine($"Вы активируйте дьявольсий триггер и превращайтесь в Демона! " +
@@ -103,39 +97,41 @@ namespace CS19
                         else
                         {
                             Nero -= bleeding;
-                            Console.WriteLine("Попытка провалилась! При активации превращения, " +
-                                "у вас открылась старая рана и пошла кровь, которая нанесла вам 50 едениц урона!");
+                            Console.WriteLine($"Попытка провалилась! При активации превращения, " +
+                                $"у вас открылась старая рана и пошла кровь, которая нанесла вам {bleeding} едениц урона!");
                             Console.WriteLine($"У босса осталось {bossMundus} хп.");
                             Console.WriteLine($"У вас осталось {Nero} хп.");
                             Console.Write("Следующая атака под номером - ");
                         }
                         userInput = Console.ReadLine();
-                        break; 
-                    case "6":
+                        break;
+                    case "4":
 
                         if (Nero < maxHealthNero || bossMundus < maxhealthbossMundus)
                         {
                             Nero += medicalPackage;
                             bossMundus += recoveryBossMundus;
-                            Console.WriteLine($"Вы использовали аптечку. Теперь у Неро {Nero} хп.");
-                            Console.WriteLine($"Демон не сидел не месте и решил восстановится, теперь у него {bossMundus} хп.");
+                            Console.WriteLine($"Вы использовали аптечку восстановив {medicalPackage} здоровья. Теперь у Неро {Nero} хп.");
+                            Console.WriteLine($"Демон не сидел не месте и решил восстановить {recoveryBossMundus} здоровья, " +
+                                $"теперь у него {bossMundus} хп.");
                             Console.Write("Следующая атака под номером - ");
                         }
                         else
                         {
                             Nero += emptyMedicalBag;
                             bossMundus += emptyMedicalBag;
-                            Console.WriteLine("Вы попробовали воспользоваться аптечкой, но в ней пусто. Атакуйте!");
+                            Console.WriteLine($"Вы уже пользовались аптечкой, в ней ничего нет. " +
+                                $"Вы восстанавливайте {emptyMedicalBag} хп. Атакуйте!");
                             Console.Write("Следующая атака под номером - ");
                         }
                         userInput = Console.ReadLine();
                         break;
-                    case "7":
+                    case "5":
                         exitApp = false;
                         break;
                     default:
                         {
-                            Console.WriteLine("Введите команды 1, 2, 3, 4, 5, 6 или 7 - выход из игры.");
+                            Console.WriteLine("Введите команды 1, 2, 3, 4, 5 - выход из игры.");
                             Console.Write("Ввод - ");
                             userInput = Console.ReadLine();
                             break;
