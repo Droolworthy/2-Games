@@ -7,36 +7,40 @@ namespace CS19
         static void Main(string[] args)
         {
             Random random = new Random(); //ранодом
-            int Nero = 100; // охотник на демонов Неро
-            int stinger = 100;// жало
-            int highside = 50; // подбросить врага вверх
-            int bossMundus = 500; // босс
-            int bossDamage = 20; // урон от босса
-            int death = 0; //смерть
             string userInput; //ввод
-            bool exitApp = true; // булевое выражение, выход из игры
-            int DevilTrigger = 250; // дьявольский триггер. атака на 1 ход на 50 ед, риск кровотечения 50 процентов.
+            int Nero = 100; // охотник на демонов Неро, 100 хп
+            int stinger = 100;// жало, 100 урона
+            int highSide = 50; // подбросить врага вверх, 50 урона
+            int bossMundus = 500; // босс, 500 здоровья
+            int bossDamage = 20; // урон от босса, 20 ед
+            int death = 0; //смерть
+            int devilTrigger = 250; // дьявольский триггер, 250 урона
             int medicalPackage = 25; // хил, восстанавливает 25 здоровья
             int recoveryBossMundus = 50; //хил демона 
             int bleeding = 50; //кровотечение
             int probabilityActivationDevilTrigger = 50; //вероятность активации девил триггера
             int emptyMedicalBag = 0; //пустой мед пакет
-            int maxhealthbossMundus = 550; // макс запаз жизей босса
+            int maxHealthBossMundus = 550; // макс запаз жизей босса
             int maxHealthNero = 125; // максимальный запас Неро
-            bool stingerEffect = false;
+            bool stingerEffect = false; //активация клинка Жало
+            bool exitApp = true; // булевое выражение, выход из игры
 
             Console.WriteLine("Вы охотник на демонов Неро, перед вами главный демон игры Мундус. Начнём!");
             Console.WriteLine();
             Console.WriteLine($"У босса {bossMundus} хп");
             Console.WriteLine($"У вас {Nero} хп");
             Console.WriteLine();
-            Console.WriteLine("1 - Жало.");
-            Console.WriteLine("2 - Подбросить врага вверх.");
-            Console.WriteLine("3 - Дьявольский триггер. Атака на 250 едениц. Риск кровотечения составляет 50 процентов.");
-            Console.WriteLine("4 - Медицинский пакет. Восстанавливает здоровье на 25 едениц. При использовании Демон восстанавливает 50 едениц.");
+            Console.WriteLine($"1 - Жало. Острый клинок, который активируется в воздухе, нанося {stinger} урона.");
+            Console.WriteLine($"2 - Подбросить врага вверх. Способность Неро наносящая {highSide} урона. " +
+                $"Даёт возможность активировать первый скилл - Жало."); 
+            Console.WriteLine($"3 - Дьявольский триггер. Атака на {devilTrigger} едениц. " +
+                $"Риск кровотечения составляет {bleeding} процентов.");
+            Console.WriteLine($"4 - Медицинский пакет. Восстанавливает здоровье на {medicalPackage} едениц. " +
+                $"При использовании Демон восстанавливает {recoveryBossMundus} едениц.");
             Console.WriteLine("5 - Выход из игры");
             Console.WriteLine();
             Console.Write("Введите команду: ");
+
             userInput = Console.ReadLine();
 
             while (exitApp)
@@ -68,28 +72,26 @@ namespace CS19
                         else
                         {
                             Console.WriteLine("Чтобы активировать жало, вам нужно подбросить врага вверх!");
-                            Console.Write("Следующая атака под номером - ");
-                            userInput = Console.ReadLine();
                         }
+                        Console.Write("Следующая атака под номером - ");
+                        userInput = Console.ReadLine();
                         break;
                     case "2":
-                        if (stingerEffect == true)
-                        bossMundus -= highside;
+                        bossMundus -= highSide;
                         Nero -= bossDamage;
                         stingerEffect = true;
-                        Console.WriteLine($"Вы подкинули демона вверх нанеся ему {highside} урона.");
+                        Console.WriteLine($"Вы подкинули демона вверх нанеся ему {highSide} урона.");
                         Console.WriteLine($"У босса осталось {bossMundus} хп.");
                         Console.WriteLine($"У вас осталось {Nero} хп.");
                         Console.Write("Следующая атака под номером - ");
                         userInput = Console.ReadLine();
                         break;
                     case "3":
-
                         if (probabilityActivationDevilTrigger > random.Next(1, 100))
                         {
-                            bossMundus -= DevilTrigger;
+                            bossMundus -= devilTrigger;
                             Console.WriteLine($"Вы активируйте дьявольсий триггер и превращайтесь в Демона! " +
-                                $"Вы наносите {DevilTrigger} едениц урона!");
+                                $"Вы наносите {devilTrigger} едениц урона!");
                             Console.WriteLine($"У босса осталось {bossMundus} хп.");
                             Console.WriteLine($"У вас осталось {Nero} хп.");
                             Console.Write("Следующая атака под номером - ");
@@ -106,8 +108,7 @@ namespace CS19
                         userInput = Console.ReadLine();
                         break;
                     case "4":
-
-                        if (Nero < maxHealthNero || bossMundus < maxhealthbossMundus)
+                        if (Nero < maxHealthNero || bossMundus < maxHealthBossMundus)
                         {
                             Nero += medicalPackage;
                             bossMundus += recoveryBossMundus;
