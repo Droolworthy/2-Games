@@ -25,7 +25,7 @@ namespace CS19
             int maxHealthBossMundus = 550; 
             int maxHealthNero = 125; 
             bool canStingerEffect = false; 
-            bool canExitApp = true; 
+            bool canExitApp = true;
 
             Console.WriteLine("Вы охотник на демонов Неро, перед вами главный демон игры Мундус. Начнём!");
             Console.WriteLine();
@@ -34,7 +34,7 @@ namespace CS19
             Console.WriteLine();
             Console.WriteLine($"1 - Жало. Острый клинок, который активируется в воздухе, нанося {stingerDamage} урона.");
             Console.WriteLine($"2 - Подбросить врага вверх. Способность Неро наносящая {highSideDamage} урона. " +
-                $"Даёт возможность активировать первый скилл - Жало."); 
+                $"Даёт возможность активировать первый скилл - Жало.");
             Console.WriteLine($"3 - Дьявольский триггер. Атака на {devilTriggerDamage} едениц. " +
                 $"Риск кровотечения составляет {bleedingDamage} процентов.");
             Console.WriteLine($"4 - Медицинский пакет. Восстанавливает здоровье на {medicalPackageHealth} едениц. " +
@@ -47,18 +47,6 @@ namespace CS19
 
             while (canExitApp)
             {
-
-                if (neroHealth <= lethalAmountHealth)
-                {
-                    Console.WriteLine(" Победа Демона! Попробуй ещё раз!");
-                    break;
-                }
-                else if (demonHealth <= lethalAmountHealth)
-                {
-                    Console.WriteLine(" Победа Неро! Демон разлетается на тысячи кусков, отправляйся в АД!");
-                    break;
-                }
-
                 switch (userInput)
                 {
                     case "1":
@@ -139,6 +127,17 @@ namespace CS19
                             userInput = Console.ReadLine();
                             break;
                         }
+                }
+
+                if (neroHealth <= lethalAmountHealth)
+                {
+                    Console.WriteLine(" Победа Демона! Попробуй ещё раз!");
+                    canExitApp = false;
+                }
+                else if (demonHealth <= lethalAmountHealth)
+                {
+                    Console.WriteLine(" Победа Неро! Демон разлетается на тысячи кусков, отправляйся в АД!");
+                    canExitApp = false;
                 }
             }
         }
